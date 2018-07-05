@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import RoomList from './components/RoomList.js'
+import MessageList from './components/MessageList.js'
 import * as firebase from 'firebase';
 var config = {
   apiKey: "AIzaSyCjwLWG4eGRdf6ePEAJ47r05JRd3SpRPik",
@@ -14,11 +15,24 @@ var config = {
 
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      message: [],
+      roomId: [],
+      activeRoom: ""
+    }
+  }
+  
   render() {
     return (
       <div className="App">
         <RoomList
          firebase={firebase}
+        />
+
+        <MessageList
+          firebase={firebase}
         />
       </div>
     );
