@@ -4,13 +4,13 @@ class MessageList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allMessages:[], 
+            messages:[], 
             message: "",
-            fliteredMessages:[],
+            filteredMessages:[],
             roomId: ""
         }
 
-        this.messageRef = this.props.firebase.database().ref('messages');
+        this.messagesRef = this.props.firebase.database().ref('messages');
 
     }
     //create a method to filter messages, create a method for when you recieve prop (componentWillRecieveProps)
@@ -18,31 +18,31 @@ class MessageList extends Component {
     componentDidMount() {
         this.messagesRef.on('child_added', snapshot => {
             const messages = snapshot.val();
-            room.key = snapshot.key;
-            this.setState({ allMessages: this.state.allMessages.concat( messages ) });
+            this.setState({ messages: this.state.messages.concat( messages ) });
             });
     }
 
-    componentWillReceiveProps() {
-
-    }
-
-    messageFilter() {
-        const message = this.messageRef
-        const room = this.props.firebase.database().ref('rooms');
-        room.concat.map() => {
-            message.filter()
-        }
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps.activeRoom.key)
+        console.log(this.state.messages)
+        const filteredMessages = this.state.messages.filter(message => nextProps.activeRoom.key == message.roomId);
+        console.log(filteredMessages)
+        this.setState({filteredMessages: filteredMessages});
+        console.log(this.state.filteredMessages)
     }
     
     render() {
         return (
             <div>
-                {
-                    this.state.allMessages.map( (message) =>
-                    <div>{message.content}</div>
-                )
-                }
+                <ul>
+                    {
+                        this.state.filteredMessages.map((message, i) => 
+                                <li key={i}>
+                                    {message.content} : {message.roomId}
+                                 </li>    
+                        )
+                    }
+                </ul>
             </div>
         );
     }

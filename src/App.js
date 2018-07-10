@@ -24,15 +24,23 @@ class App extends Component {
     }
   }
   
+  setRoom = (room) => {
+    this.setState({activeRoom: room});
+    console.log(this.state.activeRoom.key)
+  }
+
   render() {
     return (
       <div className="App">
         <RoomList
          firebase={firebase}
+         activeRoom={this.state.activeRoom}
+         setRoom={this.setRoom}
         />
 
         <MessageList
           firebase={firebase}
+          activeRoom={this.state.activeRoom}
         />
       </div>
     );
