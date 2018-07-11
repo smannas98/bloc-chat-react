@@ -23,12 +23,12 @@ class MessageList extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.activeRoom.key)
-        console.log(this.state.messages)
+        //console.log(nextProps.activeRoom.key)
+        //console.log(this.state.messages)
         const filteredMessages = this.state.messages.filter(message => nextProps.activeRoom.key == message.roomId);
-        console.log(filteredMessages)
+        //console.log(filteredMessages)
         this.setState({filteredMessages: filteredMessages});
-        console.log(this.state.filteredMessages)
+        //console.log(this.state.filteredMessages)
     }
     
     render() {
