@@ -38,7 +38,7 @@ class User extends Component {
     render() {
         return (
             <div>
-                <span>{this.props.user ? this.props.user.displayName : ''}</span>
+                <span>{this.props.user ? this.props.user.displayName : 'guest'}</span>
                 <form onSubmit={this.signIn.bind(this)}>
                     <input 
                         type="submit" 
