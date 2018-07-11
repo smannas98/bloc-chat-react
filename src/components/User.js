@@ -21,7 +21,6 @@ class User extends Component {
         this.props.firebase.auth().signInWithPopup( provider ).then(function(result){
             console.log('signing in');
             const user = result.user;
-            console.log('setting variable');
             self.props.setUser(user);
         });
     }
@@ -36,6 +35,9 @@ class User extends Component {
         })
     }
     render() {
+
+        //console.log(this.props.user)
+
         return (
             <div>
                 <span>{this.props.user ? this.props.user.displayName : 'guest'}</span>
