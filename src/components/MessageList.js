@@ -7,42 +7,72 @@ class MessageList extends Component {
             messages:[], 
             message: "",
             filteredMessages:[],
-            roomId: ""
+            roomId: "",
+            user: '',
+            username: ''
         }
 
         this.messagesRef = this.props.firebase.database().ref('messages');
-
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        console.log(this.props.user.displayName)
     }
     //create a method to filter messages, create a method for when you recieve prop (componentWillRecieveProps)
 
     componentDidMount() {
         this.messagesRef.on('child_added', snapshot => {
             const messages = snapshot.val();
-            this.setState({ messages: this.state.messages.concat( messages ) });
+            this.setState({ messages: this.state.messages.concat( messages ) }, () => this.updateFilteredMessages(this.props.activeRoom.key));
             });
+    }
+
+    updateFilteredMessages(key) {
+        const filteredMessages = this.state.messages.filter(message => key == message.roomId);
+        this.setState({filteredMessages: filteredMessages});
     }
 
     componentWillReceiveProps(nextProps) {
         //console.log(nextProps.activeRoom.key)
-        //console.log(this.state.messages)
-        const filteredMessages = this.state.messages.filter(message => nextProps.activeRoom.key == message.roomId);
-        //console.log(filteredMessages)
-        this.setState({filteredMessages: filteredMessages});
-        //console.log(this.state.filteredMessages)
+        this.updateFilteredMessages(nextProps.activeRoom.key);
+    }
+
+    handleChange(e) {
+        e.preventDefault();
+        this.setState({message: e.target.value})
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        this.setState({message: ''});
+        this.messagesRef.push({
+            username: this.props.user.displayName,
+            content: this.state.message,
+            sentAt: new Date().toISOString().slice(0,10),
+            roomId: this.props.activeRoom.key
+        })
     }
     
     render() {
         return (
             <div>
+                {this.props.activeRoom.name}
                 <ul>
                     {
                         this.state.filteredMessages.map((message, i) => 
                                 <li key={i}>
-                                    {message.content} : {message.roomId}
+                                    {message.username} : {message.content} : {message.sentAt}
                                  </li>    
                         )
                     }
                 </ul>
+                <form onSubmit={this.handleSubmit.bind(this)} onChange={this.handleChange.bind(this)}>
+                    <input
+                        type="textarea"
+                        value={this.state.message}
+                    ></input>
+                    
+                    <button type="submit">Send Message</button>
+                </form>
             </div>
         );
     }
