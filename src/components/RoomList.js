@@ -6,7 +6,8 @@ class RoomList extends Component {
         this.state = {
             rooms: [],
             newRoomName: "",
-            activeRoom: ""
+            activeRoom: "",
+            room: []
         };
 
         this.roomsRef = this.props.firebase.database().ref('rooms');
@@ -29,8 +30,13 @@ class RoomList extends Component {
         this.setState({ newRoomName: ""})
     }
 
-    deleteRoom() {
-        this.roomsRef.splice(this.roomsRef.index, 1)
+    deleteRoom(room) {
+        console.log('deleting room');
+        this.setState({ 
+            rooms: this.state.rooms.filter(loopedRoom => loopedRoom !== room) 
+        })
+        this.roomsRef.child(room.key).remove();
+        console.log('deleted room');
     }
 
     handleChange(e) {
@@ -47,6 +53,7 @@ class RoomList extends Component {
 
                     this.state.rooms.map( (room) =>
                     <div className="roomList" key={room.key} onClick={() => this.props.setRoom(room)} >{room.name}</div>
+                    <input type="submit" value="Delete Room" onSubmit={ (e) => {e.preventDefault(); this.deleteRoom(); }}></input>
                 )
                 }
 
@@ -54,10 +61,6 @@ class RoomList extends Component {
                     <label for="roomName">{this.state.activeRoom.name}</label>
                     <input type="text" id="roomName" value={ this.state.newRoomName } onChange={ this.handleChange.bind(this) }></input>
                     <input type="submit" value="Create Room"></input>
-                 </form>
-                 <form onSubmit={ (e) => {e.preventDefault(); this.deleteRoom(); }}>
-                     <input type="submit" value="Delete Room"></input>
-                 </form>
             </div>
         );
     }
