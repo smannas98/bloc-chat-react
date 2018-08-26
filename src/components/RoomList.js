@@ -29,16 +29,24 @@ class RoomList extends Component {
         this.setState({ newRoomName: ""})
     }
 
+    deleteRoom() {
+        this.roomsRef.splice(this.roomsRef.index, 1)
+    }
+
     handleChange(e) {
         this.setState({ newRoomName: e.target.value})
     }
     
     render() {
         return (
-            <div>
+            <div className="sideBar">
+                <span className="heroTitle">
+                    <h1>Bloc Chat</h1>
+                </span>
                 {
+
                     this.state.rooms.map( (room) =>
-                    <div key={room.key} onClick={() => this.props.setRoom(room)} >{room.name}</div>
+                    <div className="roomList" key={room.key} onClick={() => this.props.setRoom(room)} >{room.name}</div>
                 )
                 }
 
@@ -46,6 +54,9 @@ class RoomList extends Component {
                     <label for="roomName">{this.state.activeRoom.name}</label>
                     <input type="text" id="roomName" value={ this.state.newRoomName } onChange={ this.handleChange.bind(this) }></input>
                     <input type="submit" value="Create Room"></input>
+                 </form>
+                 <form onSubmit={ (e) => {e.preventDefault(); this.deleteRoom(); }}>
+                     <input type="submit" value="Delete Room"></input>
                  </form>
             </div>
         );

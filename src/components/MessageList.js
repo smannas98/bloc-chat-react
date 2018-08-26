@@ -54,24 +54,25 @@ class MessageList extends Component {
     
     render() {
         return (
-            <div>
-                {this.props.activeRoom.name}
-                <ul>
+            <div className="messageList">
+                <div className="activeRoomName">{this.props.activeRoom.name}</div>
+                <ul className="messageDisplay">
                     {
                         this.state.filteredMessages.map((message, i) => 
-                                <li key={i}>
+                                <li key={i} className="messageContent">
                                     {message.username} : {message.content} : {message.sentAt}
                                  </li>    
                         )
                     }
                 </ul>
-                <form onSubmit={this.handleSubmit.bind(this)} onChange={this.handleChange.bind(this)}>
+                <form onSubmit={this.handleSubmit.bind(this)} onChange={this.handleChange.bind(this)} className="messageForm">
                     <input
+                        className="textArea"
                         type="textarea"
                         value={this.state.message}
                     ></input>
                     
-                    <button type="submit">Send Message</button>
+                    <button type="submit" className="submit">Send Message</button>
                 </form>
             </div>
         );

@@ -1,0 +1,20 @@
+.messageList {
+    flex: 2 1 auto;
+}
+
+.activeRoomName {
+    text-align: center;
+}
+
+.messageDisplay {
+    text-align: center;
+    list-style-type: none;
+}
+
+.messageContent {
+    padding: 25px;
+}
+
+.messageForm {
+    text-align: center;
+}

@@ -1,0 +1,16 @@
+.sideBar {
+    border-right: solid;
+    flex: 1 1 0;
+    background-color: gray;
+    height: 100%vh;
+}
+
+.roomList {
+    padding: 10px;
+    border-style: groove;
+    border-radius: 5px;
+    border-color: black;
+    border-width: 2px;
+    border-right: solid;
+    text-align: center;
+}

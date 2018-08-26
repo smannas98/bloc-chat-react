@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
+import './css/App.css';
+import './css/roomList.css';
+import './css/messageList.css';
+import './css/user.css';
 import RoomList from './components/RoomList.js'
 import MessageList from './components/MessageList.js'
 import Username from './components/User.js'
