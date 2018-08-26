@@ -52,29 +52,18 @@ class RoomList extends Component {
                 {
 
                     this.state.rooms.map( (room) =>
-                    <div 
-                    className="roomList" 
-                    key={room.key} 
-                    onClick={() => this.props.setRoom(room)} 
-                    >
-                    {room.name}
-                    </div>
                     <div>
-                        <form>
-                            <input 
-                            type="submit" 
-                             value="Delete Room" 
-                            onSubmit={ (e) => {e.preventDefault(); this.deleteRoom(); }}>
-                            </input>
-                        </form>
+                    <div className="roomList" key={room.key} onClick={() => this.props.setRoom(room)} >{room.name}</div>
+                    <input type="submit" value="Delete Room" onSubmit={ (e) => {e.preventDefault(); this.deleteRoom(room); }}></input>
                     </div>
                 )
                 }
 
-                 <form onSubmit={ (e) => { e.preventDefault(); this.createRoom(); }}>
+                <form onSubmit={ (e) => { e.preventDefault(); this.createRoom(); }}>
                     <label for="roomName">{this.state.activeRoom.name}</label>
                     <input type="text" id="roomName" value={ this.state.newRoomName } onChange={ this.handleChange.bind(this) }></input>
                     <input type="submit" value="Create Room"></input>
+                </form>
             </div>
         );
     }
